@@ -10,7 +10,8 @@
 " ========================================
 "                 The Path
 " ========================================
-
+" On different computers, these settings maybe different.
+" So maybe you need to change these settings.
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 let g:ruby_host_prog    = '/home/frank/.gem/ruby/2.7.0/bin/neovim-ruby-host'
@@ -34,7 +35,15 @@ set scrolloff=3
 set mouse=a
 set encoding=utf-8
 let &t_ut=''
+set history=500
 
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+set laststatus=2
+set autochdir
 
 set backspace=indent,eol,start
 " set foldmethod=indent
@@ -43,8 +52,6 @@ set hidden
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-
-set termguicolors
 
 " Tab
 set noexpandtab
@@ -62,14 +69,6 @@ set cindent
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-set laststatus=2
-set autochdir
-
-autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
 
 " Search
 set hlsearch
@@ -102,7 +101,7 @@ set bdir=/home/frank/.config/nvim/.backup
 " < j   l >
 "     k
 "     v
-"
+" Move the cursor
 noremap H I
 noremap h i
 noremap i k
@@ -113,10 +112,11 @@ noremap K 5j
 noremap J 8h
 noremap L 8l
 
-noremap <C-i> 3<C-y>
-noremap <C-k> 3<C-e>
 noremap W 3w
 noremap B 3b
+
+noremap <C-i> 3<C-y>
+noremap <C-k> 3<C-e>
 
 "
 noremap sI :set nosplitbelow<CR>:split<CR>
@@ -143,8 +143,10 @@ noremap so :+tabnext<CR>
 noremap sU :bp<CR>
 noremap sO :bn<CR>
 
-" 
+" Search
 noremap <LEADER>hl :nohlsearch<CR>
+noremap = nzz
+noremap - Nzz
 
 " Spell Check
 noremap <LEADER>sc :set spell!<CR>
@@ -159,7 +161,7 @@ noremap <LEADER>ifig :r !figlet
 noremap <LEADER>rc :e /home/frank/.config/nvim/init.vim<CR>
 
 " 
-noremap <LEADER>tl bvw~w
+noremap tl bvw~w
 
 " 
 noremap S <nop>
@@ -173,34 +175,22 @@ noremap : ;
 " ========================================
 "             About Markdown
 " ========================================
-" Markdown
 autocmd Filetype markdown inoremap <buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 autocmd Filetype markdown inoremap <buffer> ,w <++>
 autocmd Filetype markdown inoremap <buffer> ,i ** <++><Esc>F*i
 autocmd Filetype markdown inoremap <buffer> ,b **** <++><Esc>F*hi
 autocmd Filetype markdown inoremap <buffer> ,d ~~~~ <++><Esc>F~hi
 autocmd Filetype markdown inoremap <buffer> ,a `` <++><Esc>F`i
-autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
+autocmd Filetype markdown inoremap <buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
 autocmd Filetype markdown inoremap <buffer> ,p ![](<++>) <++><Esc>F[a
 autocmd Filetype markdown inoremap <buffer> ,w [](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <buffer> ,l ---<Enter><Enter>
-autocmd Filetype markdown inoremap <buffer> ,1 #
-autocmd Filetype markdown inoremap <buffer> ,2 ##
-autocmd Filetype markdown inoremap <buffer> ,3 ###
-autocmd Filetype markdown inoremap <buffer> ,4 ####
-autocmd Filetype markdown inoremap <buffer> ,5 #####
-autocmd Filetype markdown inoremap <buffer> ,6 ######
-" LaTeX
-" autocmd Filetype markdown inoremap ,m $$ <++><Esc>F$i
-" autocmd Filetype markdown inoremap ,n $$<Enter><++><Enter>$$<Enter><Enter><++><Esc>4kA
-" autocmd Filetype markdown inoremap ,u ^{}<++><Esc>F}i
-" autocmd Filetype markdown inoremap ,d _{}<++><Esc>F}i
-" autocmd Filetype markdown inoremap ,/ \frac{}{<++>}<++><Esc>2F}i
-" autocmd Filetype markdown inoremap ,su \sum_{}^{<++>}<++><Esc>2F}i
-" autocmd Filetype markdown inoremap ,sq \sqrt[]{<++>}<++><Esc>F]i
-" autocmd Filetype markdown inoremap ,ca \begin{cases}<Enter>  <++> \\<Enter><++><Enter>\end{cases}<Enter><++><Esc>0xxkxx3kA
-" autocmd Filetype markdown inoremap
-
+autocmd Filetype markdown inoremap <buffer> ,l ---<CR><CR>
+autocmd Filetype markdown inoremap <buffer> ,1 # 
+autocmd Filetype markdown inoremap <buffer> ,2 ## 
+autocmd Filetype markdown inoremap <buffer> ,3 ### 
+autocmd Filetype markdown inoremap <buffer> ,4 #### 
+autocmd Filetype markdown inoremap <buffer> ,5 ##### 
+autocmd Filetype markdown inoremap <buffer> ,6 ###### 
 
 " ========================================
 "             Install Plugins
@@ -231,20 +221,24 @@ Plug 'dhruvasagar/vim-table-mode'
 " Plug 'universal-ctags/ctags'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" coc-clangd
 " coc-snippets
 " coc-translator
 " " coc-explorer
 
 Plug 'honza/vim-snippets'
 
-" Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'connorholyday/vim-snazzy'
+" NeoVim Styles
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'mhinz/vim-startify'
-Plug 'morhetz/gruvbox'
+Plug 'ajmwagar/vim-deus'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'mhinz/vim-startify'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'connorholyday/vim-snazzy'
+" Plug 'morhetz/gruvbox'
 
+" Auto change the input method
 Plug 'vim-scripts/fcitx.vim'
 
 call plug#end()
@@ -252,6 +246,10 @@ call plug#end()
 " ========================================
 "              NeoVim Styles
 " ========================================
+set t_Co=256
+set termguicolors
+
+syntax enable
 syntax on
 set number
 set relativenumber
@@ -265,24 +263,35 @@ set list
 set listchars=tab:\|\ ,trail:▫
 
 " == gruvbox ==
-colorscheme gruvbox
-let g:gruvbox_invert_indent_guides = '1'
-let g:gruvbox_contrast_dark        = 'medium'
-let g:gruvbox_contrast_light       = 'medium'
-highlight Normal ctermfg=None ctermbg=None guifg=None guibg=None
+" let g:gruvbox_invert_indent_guides = '1'
+" let g:gruvbox_contrast_light       = 'medium'
+" let g:gruvbox_contrast_dark        = 'medium'
+" colorscheme gruvbox
 " highlight Normal ctermfg=252 ctermbg=None
 " highlight Normal guibg=None ctermbg=None
+
+" == vim-deus ==
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set background=dark    " Setting dark mode
+colorscheme deus
+let g:deus_termcolors=256
+highlight Normal ctermfg=None ctermbg=None guifg=None guibg=None
+" If you use vim in a terminal that supports italics
+" set the environment variable TERM_ITALICS to TRUE
+" (i.e. export TERM_ITALICS=true) to enable with vim-deus.
 
 " == vim-airline ==
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
-" |      Other Nice Airline Themes      |
+let g:airline_theme='deus'
+" |        Nice Airline Themes          |
 " | ----------------------------------- |
 " | dracula        | base16_snazzy      |
 " | base16_bright  | base16_chalk       |
 " | base16_default | base16_grayscale   |
 " | base16_ocean   | base16_summerfruit |
+" | gruvbox        | deus               |
 
 " ========================================
 "         Configure about Plugins
@@ -294,12 +303,12 @@ let g:ale_sign_warning               = '⚡'
 let g:airline#extensions#ale#enabled = 1
 
 " == coc.nvim ===
-let g:coc_global_extensions = ['coc-snippets', 'coc-translator', 'coc-explorer']
+let g:coc_global_extensions = ['coc-clangd', 'coc-snippets', 'coc-translator', 'coc-explorer']
 
 " coc-snippets
 
 " == ctags ==
-set tags=./.tags;,.tags
+" set tags=./.tags;,.tags
 
 " == goyo ==
 noremap <LEADER>gy :Goyo<CR>
@@ -375,28 +384,28 @@ func! CompileRunGcc()
 		:sp
 		:res -5
 		:term ./%<
-	elseif &filetype == 'java'
-		exec "!javac %"
-		exec "!time java %<"
-	elseif &filetype == 'sh'
-		:!time bash %
 	elseif &filetype == 'python'
 		set splitbelow
 		:sp
 		:term python3 %
-	elseif &filetype == 'html'
-		silent! exec "!".g:mkdp_browser." % &"
+	elseif &filetype == 'go'
+		set splitbelow
+		:sp
+		:term go run %
+	elseif &filetype == 'java'
+		exec "!javac %"
+		exec "!time java %<"
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'html'
+		silent! exec "!".g:mkdp_browser." % &"
 	elseif &filetype == 'tex'
 		silent! exec "VimtexStop"
 		silent! exec "VimtexCompile"
 	elseif &filetype == 'dart'
 		CocCommand flutter.run
-	elseif &filetype == 'go'
-		set splitbelow
-		:sp
-		:term go run %
 	endif
 endfunc
 
