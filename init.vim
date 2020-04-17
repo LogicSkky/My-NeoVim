@@ -43,9 +43,9 @@ autocmd WinEnter * set cursorline
 autocmd WinLeave * set nocursorline
 
 autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
-	\   exe "normal! g`\"" |
-	\ endif
+            \ if line("'\"") > 1 && line("'\"") <= line("$") |
+            \ execute "normal! g`\"" |
+            \ endif
 
 " For coc.nvim
 set hidden
@@ -80,15 +80,15 @@ set ignorecase
 set smartcase
 
 " Backup
-if !isdirectory('/home/frank/.config/nvim/.backup') && exists('*mkdir')
-  call mkdir('/home/frank/.config/nvim/.backup')
-endif
 set backup
 set swapfile
 set undofile
 set dir=/home/frank/.config/nvim/.backup
 set udir=/home/frank/.config/nvim/.backup
 set bdir=/home/frank/.config/nvim/.backup
+if !isdirectory('/home/frank/.config/nvim/.backup') && exists('*mkdir')
+  call mkdir('/home/frank/.config/nvim/.backup')
+endif
 
 " =============================================
 "               Some Mappings
@@ -189,22 +189,22 @@ noremap <Leader>rc :e ~/.config/nvim/init.vim<CR>
 " =============================================
 "                About Markdown
 " =============================================
-autocmd Filetype markdown inoremap <buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-autocmd Filetype markdown inoremap <buffer> ,g <++>
-autocmd Filetype markdown inoremap <buffer> ,i ** <++><Esc>F*i
-autocmd Filetype markdown inoremap <buffer> ,b **** <++><Esc>F*hi
-autocmd Filetype markdown inoremap <buffer> ,d ~~~~ <++><Esc>F~hi
-autocmd Filetype markdown inoremap <buffer> ,a `` <++><Esc>F`i
-autocmd Filetype markdown inoremap <buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
-autocmd Filetype markdown inoremap <buffer> ,p ![](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <buffer> ,w [](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <buffer> ,l ---<CR><CR>
-autocmd Filetype markdown inoremap <buffer> ,1 # 
-autocmd Filetype markdown inoremap <buffer> ,2 ## 
-autocmd Filetype markdown inoremap <buffer> ,3 ### 
-autocmd Filetype markdown inoremap <buffer> ,4 #### 
-autocmd Filetype markdown inoremap <buffer> ,5 ##### 
-autocmd Filetype markdown inoremap <buffer> ,6 ###### 
+autocmd Filetype markdown inoremap <Buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+autocmd Filetype markdown inoremap <Buffer> ,g <++>
+autocmd Filetype markdown inoremap <Buffer> ,i ** <++><Esc>F*i
+autocmd Filetype markdown inoremap <Buffer> ,b **** <++><Esc>F*hi
+autocmd Filetype markdown inoremap <Buffer> ,d ~~~~ <++><Esc>F~hi
+autocmd Filetype markdown inoremap <Buffer> ,a `` <++><Esc>F`i
+autocmd Filetype markdown inoremap <Buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
+autocmd Filetype markdown inoremap <Buffer> ,p ![](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap <Buffer> ,w [](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap <Buffer> ,l ---<CR><CR>
+autocmd Filetype markdown inoremap <Buffer> ,1 # 
+autocmd Filetype markdown inoremap <Buffer> ,2 ## 
+autocmd Filetype markdown inoremap <Buffer> ,3 ### 
+autocmd Filetype markdown inoremap <Buffer> ,4 #### 
+autocmd Filetype markdown inoremap <Buffer> ,5 ##### 
+autocmd Filetype markdown inoremap <Buffer> ,6 ###### 
 
 " =============================================
 "         Terminal Settings and Styles
@@ -253,13 +253,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'dense-analysis/ale'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" coc-clangd
-" coc-snippets
-" coc-translator
-" coc-explorer
-" coc-yank
-" coc-json
-" coc-python
 
 Plug 'wincent/terminus'
 
@@ -383,8 +376,52 @@ let g:rainbow_conf = {
 noremap ser :RainbowToggle<CR>
 
 " ===
+" === vim-startify
+" ===
+autocmd TabNewEntered * Startify
+let g:startify_padding_left = 20
+let s:startify_header = [
+            \ ' _                _    __     ___           ',
+            \ '| |    ___   __ _(_) __\ \   / (_)_ __ ___  ',
+            \ '| |   / _ \ / _` | |/ __\ \ / /| | ''_ ` _ \ ',
+            \ '| |__| (_) | (_| | | (__ \ V / | | | | | | |',
+            \ '|_____\___/ \__, |_|\___| \_/  |_|_| |_| |_|',
+            \ '            |___/                           ',
+            \ '                                            ',
+            \ '        [ Author:GitHub@LogicSkky ]         ',
+            \ ]
+let s:startify_footer = [
+            \ '----------------------------------------------------------------------------------',
+            \ '                                   Enjoy Coding!                                  ',
+            \ ]
+
+function! s:Startify_center(lines) abort
+    let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
+    let centered_lines = map(copy(a:lines),
+                \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+    return centered_lines
+endfunction
+
+let g:startify_custom_header = s:Startify_center(s:startify_header)
+let g:startify_custom_footer = s:Startify_center(s:startify_footer)
+
+highlight StartifyBracket guifg=#928374
+highlight StartifyFile    guifg=#C678DD
+highlight StartifyFooter  guifg=#FE8019
+highlight StartifyHeader  guifg=#FE8019
+highlight StartifyNumber  guifg=#fabd2f
+highlight StartifyPath    guifg=#83A598
+highlight StartifySection guifg=#FE8019
+highlight StartifySelect  guifg=#FE8019
+highlight StartifySlash   guifg=#83A598
+highlight StartifySpecial guifg=#2C323B
+highlight StartifyVar     guifg=#8EC07C
+
+" ===
 " === indentLine
 " ===
+let g:indentLine_fileType = ['c', 'cpp', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
+let g:indentLine_color_gui = '#000000'
 " Use 'sei' to toggle the indentLine.
 noremap sei :IndentLinesToggle<CR>
 
@@ -409,13 +446,13 @@ let g:airline#extensions#ale#enabled = 1
 " ===
 " === coc.nvim
 " ===
-let g:coc_global_extensions = ['coc-clangd', 'coc-snippets', 'coc-translator', 'coc-explorer', 'coc-yank', 'coc-python', 'coc-json']
+let g:coc_global_extensions = ['coc-clangd', 'coc-snippets', 'coc-translator', 'coc-explorer', 'coc-yank', 'coc-python', 'coc-json', 'coc-vimlsp']
 
 " Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ coc#refresh()
+inoremap <Silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -424,7 +461,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <Silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -435,17 +472,17 @@ else
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <Silent> [g <Plug>(coc-diagnostic-prev)
+nmap <Silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <Silent> gd <Plug>(coc-definition)
+nmap <Silent> gy <Plug>(coc-type-definition)
+nmap <Silent> gi <Plug>(coc-implementation)
+nmap <Silent> gr <Plug>(coc-references)
 
 " Use D to show documentation in preview window.
-nnoremap <silent> D :call <SID>show_documentation()<CR>
+nnoremap <Silent> D :call <SID>show_documentation()<CR>
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
@@ -492,8 +529,8 @@ omap af <Plug>(coc-funcobj-a)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-vmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <Silent> <TAB> <Plug>(coc-range-select)
+vmap <Silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -511,23 +548,23 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <Silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <Silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <Silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <Silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <Silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <Silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <Silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <Silent> <space>p  :<C-u>CocListResume<CR>
 
-" == coc-snippets
+" == coc-snippets ==
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for select text for visual placeholder of snippet.
@@ -539,7 +576,7 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" == coc-translator
+" == coc-translator ==
 " popup
 nmap <Leader>l <Plug>(coc-translator-p)
 vmap <Leader>l <Plug>(coc-translator-pv)
@@ -550,12 +587,18 @@ vmap <Leader>e <Plug>(coc-translator-ev)
 nmap <Leader>p <Plug>(coc-translator-r)
 vmap <Leader>p <Plug>(coc-translator-rv)
 
-" == coc-explorer
+" == coc-explorer ==
 noremap te :CocCommand explorer<CR>
 " ✹ ✚ ✭ ➜ ═ ✖ ✗ ✔︎ ☒ ? 
 
-" == coc-yank
+" == coc-yank ==
 noremap ty  :<C-u>CocList -A --normal yank<cr>
+
+" == coc-vimlsp ==
+let g:markdown_fenced_languages = [
+            \ 'vim',
+            \ 'help'
+            \]
 
 " ===
 " === ctags
@@ -585,16 +628,16 @@ let g:mkdp_browser = 'google-chrome-stable'
 let g:mkdp_echo_preview_url   = 0
 let g:mkdp_browserfunc        = ''
 let g:mkdp_preview_options    = {
-    \ 'mkit':                {},
-    \ 'katex':               {},
-    \ 'uml':                 {},
-    \ 'maid':                {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type':    'middle',
-    \ 'hide_yaml_meta':      1,
-    \ 'sequence_diagrams':   {},
-    \ 'flowchart_diagrams':  {}
-    \ }
+            \ 'mkit':                {},
+            \ 'katex':               {},
+            \ 'uml':                 {},
+            \ 'maid':                {},
+            \ 'disable_sync_scroll': 0,
+            \ 'sync_scroll_type':    'middle',
+            \ 'hide_yaml_meta':      1,
+            \ 'sequence_diagrams':   {},
+            \ 'flowchart_diagrams':  {}
+            \ }
 let g:mkdp_markdown_css       = ''
 let g:mkdp_highlight_css      = ''
 let g:mkdp_port               = ''
