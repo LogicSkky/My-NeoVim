@@ -19,14 +19,14 @@ let g:ruby_host_prog    = '/home/frank/.gem/ruby/2.7.0/bin/neovim-ruby-host'
 " =============================================
 "                Some Settings
 " =============================================
-let mapleader=" "
-" set clipboard=unnamedplus
-
 set nocompatible
 filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
+
+let mapleader=" "
+" set clipboard=unnamedplus
 
 set nowrap
 set wildmenu
@@ -83,11 +83,11 @@ set smartcase
 set backup
 set swapfile
 set undofile
-set dir=/home/frank/.config/nvim/.backup
-set udir=/home/frank/.config/nvim/.backup
-set bdir=/home/frank/.config/nvim/.backup
-if !isdirectory('/home/frank/.config/nvim/.backup') && exists('*mkdir')
-  call mkdir('/home/frank/.config/nvim/.backup')
+set dir=~/.config/nvim/.backup
+set udir=~/.config/nvim/.backup
+set bdir=~/.config/nvim/.backup
+if !isdirectory('~/.config/nvim/.backup') && exists('*mkdir')
+  call mkdir('~/.config/nvim/.backup')
 endif
 
 " =============================================
@@ -95,43 +95,38 @@ endif
 " =============================================
 
 " 
-noremap S <Nop>
 noremap s <Nop>
-noremap U <Nop>
-noremap D <Nop>
 noremap S :w<CR>
 noremap Q :q<CR>
 noremap R :source $MYVIMRC<CR>
 noremap ; :
 noremap : ;
 
-noremap H I
-noremap h i
-
 noremap U <C-r>
-noremap <C-u> <C-i>
 
 "     ^
-"     i
-" < j   l >
 "     k
+" < h   l >
+"     j
 "     v
 " Move the cursor.
-noremap i k
-noremap k j
-noremap j h
-noremap I 5k
-noremap K 5j
-noremap J 8h
+noremap H 8h
+noremap J 5j
+noremap K 5k
 noremap L 8l
 noremap W 3w
 noremap B 3b
 
-noremap <C-j> 0
+inoremap <M-h> <left>
+inoremap <M-j> <down>
+inoremap <M-k> <up>
+inoremap <M-l> <right>
+
+noremap <C-h> 0
 noremap <C-l> $
 
-noremap <C-i> 3<C-y>
-noremap <C-k> 3<C-e>
+noremap <C-k> 3<C-y>
+noremap <C-j> 3<C-e>
 
 " Indent.
 noremap < <<
@@ -140,13 +135,13 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Window management.
-noremap sI :set nosplitbelow<CR>:split<CR>
-noremap sK :set splitbelow<CR>:split<CR>
-noremap sJ :set nosplitright<CR>:vsplit<CR>
+noremap sK :set nosplitbelow<CR>:split<CR>
+noremap sJ :set splitbelow<CR>:split<CR>
+noremap sH :set nosplitright<CR>:vsplit<CR>
 noremap sL :set splitright<CR>:vsplit<CR>
-noremap si <C-w>k
-noremap sk <C-W>j
-noremap sj <C-W>h
+noremap sk <C-w>k
+noremap sj <C-W>j
+noremap sh <C-W>h
 noremap sl <C-W>l
 noremap s<Up> :res +3<CR>
 noremap s<Down> :res -3<CR>
@@ -189,22 +184,22 @@ noremap <Leader>rc :e ~/.config/nvim/init.vim<CR>
 " =============================================
 "                About Markdown
 " =============================================
-autocmd Filetype markdown inoremap <Buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-autocmd Filetype markdown inoremap <Buffer> ,g <++>
-autocmd Filetype markdown inoremap <Buffer> ,i ** <++><Esc>F*i
-autocmd Filetype markdown inoremap <Buffer> ,b **** <++><Esc>F*hi
-autocmd Filetype markdown inoremap <Buffer> ,d ~~~~ <++><Esc>F~hi
-autocmd Filetype markdown inoremap <Buffer> ,a `` <++><Esc>F`i
-autocmd Filetype markdown inoremap <Buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
-autocmd Filetype markdown inoremap <Buffer> ,p ![](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <Buffer> ,w [](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <Buffer> ,l ---<CR><CR>
-autocmd Filetype markdown inoremap <Buffer> ,1 # 
-autocmd Filetype markdown inoremap <Buffer> ,2 ## 
-autocmd Filetype markdown inoremap <Buffer> ,3 ### 
-autocmd Filetype markdown inoremap <Buffer> ,4 #### 
-autocmd Filetype markdown inoremap <Buffer> ,5 ##### 
-autocmd Filetype markdown inoremap <Buffer> ,6 ###### 
+autocmd Filetype markdown inoremap <buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+autocmd Filetype markdown inoremap <buffer> ,g <++>
+autocmd Filetype markdown inoremap <buffer> ,i ** <++><Esc>F*i
+autocmd Filetype markdown inoremap <buffer> ,b **** <++><Esc>F*hi
+autocmd Filetype markdown inoremap <buffer> ,d ~~~~ <++><Esc>F~hi
+autocmd Filetype markdown inoremap <buffer> ,a `` <++><Esc>F`i
+autocmd Filetype markdown inoremap <buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
+autocmd Filetype markdown inoremap <buffer> ,p ![](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap <buffer> ,w [](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap <buffer> ,l ---<CR><CR>
+autocmd Filetype markdown inoremap <buffer> ,1 # 
+autocmd Filetype markdown inoremap <buffer> ,2 ## 
+autocmd Filetype markdown inoremap <buffer> ,3 ### 
+autocmd Filetype markdown inoremap <buffer> ,4 #### 
+autocmd Filetype markdown inoremap <buffer> ,5 ##### 
+autocmd Filetype markdown inoremap <buffer> ,6 ###### 
 
 " =============================================
 "         Terminal Settings and Styles
@@ -230,21 +225,22 @@ let g:terminal_color_14 = '#9AEDFE'
 " =============================================
 "               Install Plugins
 " =============================================
-call plug#begin('/home/frank/.config/nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
+Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-surround'
 
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
-" Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-easy-align'
+" Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
+" Plug 'junegunn/vim-emoji'
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
@@ -254,16 +250,18 @@ Plug 'dense-analysis/ale'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'wincent/terminus'
+" Plug 'wincent/terminus'
+Plug 'voldikss/vim-floaterm'
 
 " Markdown
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'mzlogin/vim-markdown-toc'
 
+" Auto change the input method
+Plug 'vim-scripts/fcitx.vim'
+
 " NeoVim Styles
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ajmwagar/vim-deus'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhinz/vim-startify'
@@ -271,12 +269,8 @@ Plug 'luochen1990/rainbow'
 Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
 Plug 'Yggdroot/indentLine'
-" Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'connorholyday/vim-snazzy'
-" Plug 'morhetz/gruvbox'
-
-" Auto change the input method
-Plug 'vim-scripts/fcitx.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
@@ -290,19 +284,19 @@ syntax enable
 syntax on
 set number
 set relativenumber
-set showcmd    " show the command
-set showmatch
-set showmode
 set cmdheight=2
 set cc=80
 set cursorline
+set showcmd    " show the command
+set showmatch
+set showmode
 set laststatus=2    " always show the statusline
 set signcolumn=yes  " always show the sidebar
 set showtabline=2   " always show the tabline
 
 set list
 set listchars=tab:\|\ ,trail:▫
-" | ¦ ┆ ┊
+" | ¦ ┆ ┊ ▫ ▫ ┊ ┆ ¦ |
 
 " ===
 " === vim-deus
@@ -336,15 +330,11 @@ endfunction
 " ===
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 let g:airline_theme='deus'
-" |        Nice Airline Themes          |
-" | ----------------------------------- |
-" | dracula        | base16_snazzy      |
-" | base16_bright  | base16_chalk       |
-" | base16_default | base16_grayscale   |
-" | base16_ocean   | base16_summerfruit |
-" | gruvbox        | deus               |
+" " Nice Airline Themes
+" " dracula base16_snazzy base16_bright  base16_chalk base16_default
+" " base16_grayscale base16_ocean base16_summerfruit gruvbox deus
 
 " ===
 " === rainbow
@@ -353,7 +343,7 @@ let g:rainbow_active = 0   " 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-    \   'operators': '_,\|+\|-\|*\|\/\|==\|!=\|=\|>\|<_',
+    \   'operators': '_,\|%\|+\|-\|*\|\/\|==\|!=\|=\|>\|<_',
     \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
     \   'separately': {
     \       '*': {},
@@ -378,7 +368,7 @@ noremap ser :RainbowToggle<CR>
 " ===
 " === vim-startify
 " ===
-autocmd TabNewEntered * Startify
+" autocmd TabNewEntered * Startify
 let g:startify_padding_left = 20
 let s:startify_header = [
             \ ' _                _    __     ___           ',
@@ -388,7 +378,7 @@ let s:startify_header = [
             \ '|_____\___/ \__, |_|\___| \_/  |_|_| |_| |_|',
             \ '            |___/                           ',
             \ '                                            ',
-            \ '        [ Author:GitHub@LogicSkky ]         ',
+            \ '        [ Author:GitHub@logicskky ]         ',
             \ ]
 let s:startify_footer = [
             \ '----------------------------------------------------------------------------------',
@@ -405,8 +395,8 @@ endfunction
 let g:startify_custom_header = s:Startify_center(s:startify_header)
 let g:startify_custom_footer = s:Startify_center(s:startify_footer)
 
-highlight StartifyBracket guifg=#928374
-highlight StartifyFile    guifg=#C678DD
+highlight StartifyBracket guifg=#83A598
+highlight StartifyFile    guifg=#FB4934
 highlight StartifyFooter  guifg=#FE8019
 highlight StartifyHeader  guifg=#FE8019
 highlight StartifyNumber  guifg=#fabd2f
@@ -428,9 +418,9 @@ noremap sei :IndentLinesToggle<CR>
 " ===
 " === vim-illuminate
 " ===
+hi illuminatedWord cterm=underline gui=underline
 " Use 'seu' to toggle the underline of the word.
 noremap seu :IlluminationToggle<CR>
-hi illuminatedWord cterm=underline gui=underline
 
 " =============================================
 "           Configure about Plugins
@@ -449,7 +439,7 @@ let g:airline#extensions#ale#enabled = 1
 let g:coc_global_extensions = ['coc-clangd', 'coc-snippets', 'coc-translator', 'coc-explorer', 'coc-yank', 'coc-python', 'coc-json', 'coc-vimlsp']
 
 " Use tab for trigger completion with characters ahead and navigate.
-inoremap <Silent><expr> <TAB>
+inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
             \ coc#refresh()
@@ -461,7 +451,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <Silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -472,17 +462,17 @@ else
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <Silent> [g <Plug>(coc-diagnostic-prev)
-nmap <Silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <Silent> gd <Plug>(coc-definition)
-nmap <Silent> gy <Plug>(coc-type-definition)
-nmap <Silent> gi <Plug>(coc-implementation)
-nmap <Silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use D to show documentation in preview window.
-nnoremap <Silent> D :call <SID>show_documentation()<CR>
+nnoremap <silent> D :call <SID>show_documentation()<CR>
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
@@ -529,8 +519,8 @@ omap af <Plug>(coc-funcobj-a)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <Silent> <TAB> <Plug>(coc-range-select)
-vmap <Silent> <TAB> <Plug>(coc-range-select)
+nmap <silent> <TAB> <Plug>(coc-range-select)
+vmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -548,33 +538,33 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <Silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <Silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <Silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <Silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <Silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <Silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <Silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <Silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " == coc-snippets ==
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+"imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+"vmap <C-j> <Plug>(coc-snippets-select)
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+"let g:coc_snippet_next = '<c-j>'
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+"let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+"imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " == coc-translator ==
 " popup
@@ -647,15 +637,26 @@ let g:mkdp_page_title         = '「${name}」'
 " === rnvimr
 " ===
 " Make Ranger replace netrw and be the file explorer
-let g:rnvimr_ex_enable = 1
+" let g:rnvimr_ex_enable = 1
 " Customize the initial layout
-let g:rnvimr_layout = { 'relative': 'editor',
-            \ 'width': float2nr(round(0.75 * &columns)),
-            \ 'height': float2nr(round(0.75 * &lines)),
-            \ 'col': float2nr(round(0.125 * &columns)),
-            \ 'row': float2nr(round(0.125 * &lines)),
-            \ 'style': 'minimal' }
-noremap tr :RnvimrToggle<CR>
+" let g:rnvimr_layout = { 'relative': 'editor',
+"             \ 'width': float2nr(round(0.75 * &columns)),
+"             \ 'height': float2nr(round(0.75 * &lines)),
+"             \ 'col': float2nr(round(0.125 * &columns)),
+"             \ 'row': float2nr(round(0.125 * &lines)),
+"             \ 'style': 'minimal' }
+" noremap tr :RnvimrToggle<CR>
+
+" ===
+" === vim-easy-align
+" ===
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" ===
+" === vim-floaterm
+" ===
+noremap tr :FloatermNew ranger<CR>
 
 " ===
 " === vim-markdown-toc
@@ -678,21 +679,21 @@ function! CompileRunGcc()
         execute "!g++ % -o %<"
         :split
         :res -5
-        :term ./%<
+        :terminal ./%<
     elseif &filetype == 'cpp'
         set splitbelow
         execute "!g++ -std=c++11 % -Wall -o %<"
         :split
         :res -5
-        :term ./%<
+        :terminal ./%<
     elseif &filetype == 'python'
         set splitbelow
         :split
-        :term python3 %
+        :terminal python3 %
     elseif &filetype == 'go'
         set splitbelow
         :split
-        :term go run %
+        :terminal go run %
     elseif &filetype == 'java'
         execute "!javac %"
         execute "!time java %<"
