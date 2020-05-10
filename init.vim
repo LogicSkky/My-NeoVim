@@ -83,11 +83,11 @@ set smartcase
 set backup
 set swapfile
 set undofile
-set dir=~/.config/nvim/.backup
-set udir=~/.config/nvim/.backup
-set bdir=~/.config/nvim/.backup
-if !isdirectory('~/.config/nvim/.backup') && exists('*mkdir')
-  call mkdir('~/.config/nvim/.backup')
+set backupdir=$HOME/.config/nvim/.backup
+set directory=$HOME/.config/nvim/.backup
+set undodir=$HOME/.config/nvim/.backup
+if !isdirectory($HOME.'/.config/nvim/.backup') && exists('*mkdir')
+  call mkdir($HOME.'/.config/nvim/.backup')
 endif
 
 " =============================================
@@ -179,7 +179,7 @@ noremap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 noremap <Leader>tx :r !figlet 
 
 " Open MY - NVIMRC.
-noremap <Leader>rc :e ~/.config/nvim/init.vim<CR>
+noremap <Leader>rc :e $HOME/.config/nvim/init.vim<CR>
 
 " =============================================
 "                About Markdown
@@ -225,7 +225,7 @@ let g:terminal_color_14 = '#9AEDFE'
 " =============================================
 "               Install Plugins
 " =============================================
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('$HOME/.config/nvim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
@@ -233,6 +233,9 @@ Plug 'tpope/vim-surround'
 
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'kristijanhusak/defx-git'
+Plug 'kristijanhusak/defx-icons'
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
@@ -419,6 +422,7 @@ noremap sei :IndentLinesToggle<CR>
 " === vim-illuminate
 " ===
 hi illuminatedWord cterm=underline gui=underline
+let g:Illuminate_ftblacklist = ['defx']
 " Use 'seu' to toggle the underline of the word.
 noremap seu :IlluminationToggle<CR>
 
@@ -436,7 +440,16 @@ let g:airline#extensions#ale#enabled = 1
 " ===
 " === coc.nvim
 " ===
-let g:coc_global_extensions = ['coc-clangd', 'coc-snippets', 'coc-translator', 'coc-explorer', 'coc-yank', 'coc-python', 'coc-json', 'coc-vimlsp']
+let g:coc_global_extensions = [
+            \ 'coc-clangd',
+            \ 'coc-python',
+            \ 'coc-vimlsp',
+            \ 'coc-json',
+            \ 'coc-snippets',
+            \ 'coc-translator',
+            \ 'coc-explorer',
+            \ 'coc-yank'
+            \ ]
 
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
@@ -462,8 +475,8 @@ else
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"-nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -538,21 +551,21 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+"-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+"-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+"-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+"-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+"-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+"-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " == coc-snippets ==
 " Use <C-l> for trigger snippet expand.
@@ -578,7 +591,7 @@ nmap <Leader>p <Plug>(coc-translator-r)
 vmap <Leader>p <Plug>(coc-translator-rv)
 
 " == coc-explorer ==
-noremap te :CocCommand explorer<CR>
+"-noremap te :CocCommand explorer<CR>
 " ✹ ✚ ✭ ➜ ═ ✖ ✗ ✔︎ ☒ ? 
 
 " == coc-yank ==
@@ -588,12 +601,93 @@ noremap ty  :<C-u>CocList -A --normal yank<cr>
 let g:markdown_fenced_languages = [
             \ 'vim',
             \ 'help'
-            \]
+            \ ]
 
 " ===
 " === ctags
 " ===
 " set tags=./.tags;,.tags
+
+" ===
+" === defx.nvim
+" ===
+noremap te :Defx -split=vertical -winwidth=30 -direction=topleft -columns=git:mark:icons:indent:filename:type<CR>
+call defx#custom#column('icon', {
+            \ 'directory_icon': '▸',
+            \ 'opened_icon': '▾',
+            \ 'root_icon': ' ',
+            \ })
+call defx#custom#column('filename', {
+            \ 'min_width': 40,
+            \ 'max_width': 40,
+            \ })
+call defx#custom#column('mark', {
+            \ 'readonly_icon': '✗',
+            \ 'selected_icon': '✓',
+            \ })
+
+autocmd FileType defx set cursorline
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+    " Define mappings
+    nnoremap <silent><buffer><expr> <CR> defx#do_action('open')
+    nnoremap <silent><buffer><expr> c defx#do_action('copy')
+    nnoremap <silent><buffer><expr> m defx#do_action('move')
+    nnoremap <silent><buffer><expr> p defx#do_action('paste')
+    nnoremap <silent><buffer><expr> l defx#do_action('open')
+    nnoremap <silent><buffer><expr> E defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr> P defx#do_action('open', 'pedit')
+    nnoremap <silent><buffer><expr> o defx#do_action('open_tree', 'toggle')
+    nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> N defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> M defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
+    nnoremap <silent><buffer><expr> S defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr> d defx#do_action('remove')
+    nnoremap <silent><buffer><expr> r defx#do_action('rename')
+    nnoremap <silent><buffer><expr> ! defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> x defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> ; defx#do_action('repeat')
+    nnoremap <silent><buffer><expr> h defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> ~ defx#do_action('cd')
+    nnoremap <silent><buffer><expr> q defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+    nnoremap <silent><buffer><expr> * defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
+    nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
+    nnoremap <silent><buffer><expr> <C-l> defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
+    nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
+endfunction
+
+" == defx-git ==
+call defx#custom#column('git', 'indicators', {
+            \ 'Modified'  : '✹',
+            \ 'Staged'    : '✚',
+            \ 'Untracked' : '✭',
+            \ 'Renamed'   : '➜',
+            \ 'Unmerged'  : '═',
+            \ 'Ignored'   : '☒',
+            \ 'Deleted'   : '✖',
+            \ 'Unknown'   : '?'
+            \ })
+
+" == defx-icons ==
+let g:defx_icons_enable_syntax_highlight = 1
+let g:defx_icons_column_length = 1
+let g:defx_icons_directory_icon = ''
+let g:defx_icons_mark_icon = '*'
+let g:defx_icons_copy_icon = ''
+let g:defx_icons_move_icon = ''
+let g:defx_icons_parent_icon = ''
+let g:defx_icons_default_icon = ''
+let g:defx_icons_directory_symlink_icon = ''
+" Options below are applicable only when using "tree" feature
+let g:defx_icons_root_opened_tree_icon = ''
+let g:defx_icons_nested_opened_tree_icon = ''
+let g:defx_icons_nested_closed_tree_icon = ''
 
 " ===
 " === goyo
