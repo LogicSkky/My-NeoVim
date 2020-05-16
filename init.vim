@@ -25,7 +25,7 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
-let mapleader=" "
+let mapleader="\<space>"
 " set clipboard=unnamedplus
 
 set nowrap
@@ -96,9 +96,9 @@ endif
 
 " 
 noremap s <Nop>
-noremap S :w<CR>
-noremap Q :q<CR>
-noremap R :source $MYVIMRC<CR>
+noremap <Leader>fs :w<CR>
+noremap <Leader>fq :q<CR>
+noremap <Leader>fr :source $MYVIMRC<CR>
 noremap ; :
 noremap : ;
 
@@ -151,15 +151,15 @@ noremap srv <C-w>t<C-w>H
 noremap srh <C-w>t<C-w>K
 
 " Tabs.
-noremap ss :tabedit<CR>
+noremap sn :tabedit<CR>
 noremap su :-tabnext<CR>
-noremap so :+tabnext<CR>
+noremap si :+tabnext<CR>
 noremap smu :-tabmove<CR>
-noremap smo :+tabmove<CR>
+noremap smi :+tabmove<CR>
 
 " Buffers.
 noremap sU :bprevious<CR>
-noremap sO :bnext<CR>
+noremap sI :bnext<CR>
 
 " Search.
 noremap <Leader><CR> :nohlsearch<CR>
@@ -170,36 +170,10 @@ noremap N Nzz
 vnoremap Y "+y
 
 " Spell Check.
-noremap <Leader>sc :set spell!<CR>
+noremap <Leader>ts :set spell!<CR>
 
 " Find a Next '<++>' and Edit it.
 noremap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-
-" ASCII Art (figlet).
-noremap <Leader>tx :r !figlet 
-
-" Open MY - NVIMRC.
-noremap <Leader>rc :e $HOME/.config/nvim/init.vim<CR>
-
-" =============================================
-"                About Markdown
-" =============================================
-autocmd Filetype markdown inoremap <buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
-autocmd Filetype markdown inoremap <buffer> ,g <++>
-autocmd Filetype markdown inoremap <buffer> ,i ** <++><Esc>F*i
-autocmd Filetype markdown inoremap <buffer> ,b **** <++><Esc>F*hi
-autocmd Filetype markdown inoremap <buffer> ,d ~~~~ <++><Esc>F~hi
-autocmd Filetype markdown inoremap <buffer> ,a `` <++><Esc>F`i
-autocmd Filetype markdown inoremap <buffer> ,c ```<CR><++><CR>```<CR><CR><++><Esc>4kA
-autocmd Filetype markdown inoremap <buffer> ,p ![](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <buffer> ,w [](<++>) <++><Esc>F[a
-autocmd Filetype markdown inoremap <buffer> ,l ---<CR><CR>
-autocmd Filetype markdown inoremap <buffer> ,1 # 
-autocmd Filetype markdown inoremap <buffer> ,2 ## 
-autocmd Filetype markdown inoremap <buffer> ,3 ### 
-autocmd Filetype markdown inoremap <buffer> ,4 #### 
-autocmd Filetype markdown inoremap <buffer> ,5 ##### 
-autocmd Filetype markdown inoremap <buffer> ,6 ###### 
 
 " =============================================
 "         Terminal Settings and Styles
@@ -234,8 +208,8 @@ Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'kristijanhusak/defx-git'
-Plug 'kristijanhusak/defx-icons'
+" Plug 'kristijanhusak/defx-git'
+" Plug 'kristijanhusak/defx-icons'
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
@@ -249,12 +223,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
 " Plug 'universal-ctags/ctags'
 
+" Coding
 Plug 'dense-analysis/ale'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Plug 'wincent/terminus'
+" Terminal
 Plug 'voldikss/vim-floaterm'
+" Plug 'wincent/terminus'
 
 " Markdown
 Plug 'dhruvasagar/vim-table-mode'
@@ -266,7 +242,6 @@ Plug 'vim-scripts/fcitx.vim'
 
 " NeoVim Styles
 Plug 'ajmwagar/vim-deus'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
 Plug 'ryanoasis/vim-devicons'
@@ -287,7 +262,7 @@ syntax enable
 syntax on
 set number
 set relativenumber
-set cmdheight=2
+set cmdheight=3
 set cc=80
 set cursorline
 set showcmd    " show the command
@@ -311,17 +286,21 @@ colorscheme deus
 let g:deus_termcolors=256
 highlight! NonText ctermfg=gray guifg=grey10
 " Use 'seb' to toggle the background opacity.
-let g:StylesBOpacity = 1
+let g:StylesBOpacity = 0
 noremap seb :call StylesBackgroundOpacityToggle()<CR>
 function! StylesBackgroundOpacityToggle()
-    if g:StylesBOpacity == 1
+    if g:StylesBOpacity == 0
         execute "hi Normal ctermfg=None ctermbg=None guifg=None guibg=None"
         execute "hi! NonText ctermfg=gray guifg=grey10"
-        let g:StylesBOpacity = 0
+        set nocursorline
+        set cc=0
+        let g:StylesBOpacity = 1
     else
         execute "colorscheme deus"
         execute "hi! NonText ctermfg=gray guifg=grey10"
-        let g:StylesBOpacity = 1
+        set cursorline
+        set cc=80
+        let g:StylesBOpacity = 0
     endif
 endfunction
 " If you use vim in a terminal that supports italics
@@ -423,6 +402,7 @@ noremap sei :IndentLinesToggle<CR>
 " ===
 hi illuminatedWord cterm=underline gui=underline
 let g:Illuminate_ftblacklist = ['defx']
+let g:Illuminate_delay = 250
 " Use 'seu' to toggle the underline of the word.
 noremap seu :IlluminationToggle<CR>
 
@@ -433,8 +413,8 @@ noremap seu :IlluminationToggle<CR>
 " ===
 " === ale
 " ===
-let g:ale_sign_error                 = '✗'
-let g:ale_sign_warning               = '⚡'
+"-let g:ale_sign_error                 = '✗'
+"-let g:ale_sign_warning               = '⚡'
 let g:airline#extensions#ale#enabled = 1
 
 " ===
@@ -445,9 +425,7 @@ let g:coc_global_extensions = [
             \ 'coc-python',
             \ 'coc-vimlsp',
             \ 'coc-json',
-            \ 'coc-snippets',
             \ 'coc-translator',
-            \ 'coc-explorer',
             \ 'coc-yank'
             \ ]
 
@@ -567,18 +545,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Resume latest coc list.
 "-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" == coc-snippets ==
-" Use <C-l> for trigger snippet expand.
-"imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for select text for visual placeholder of snippet.
-"vmap <C-j> <Plug>(coc-snippets-select)
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-"let g:coc_snippet_next = '<c-j>'
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-"let g:coc_snippet_prev = '<c-k>'
-" Use <C-j> for both expand and jump (make expand higher priority.)
-"imap <C-j> <Plug>(coc-snippets-expand-jump)
-
 " == coc-translator ==
 " popup
 nmap <Leader>l <Plug>(coc-translator-p)
@@ -592,7 +558,7 @@ vmap <Leader>p <Plug>(coc-translator-rv)
 
 " == coc-explorer ==
 "-noremap te :CocCommand explorer<CR>
-" ✹ ✚ ✭ ➜ ═ ✖ ✗ ✔︎ ☒ ? 
+" ✹ ✚ ✭ ➜ ═ ✖ ✗ ✔︎ ☒ ?
 
 " == coc-yank ==
 noremap ty  :<C-u>CocList -A --normal yank<cr>
@@ -611,7 +577,7 @@ let g:markdown_fenced_languages = [
 " ===
 " === defx.nvim
 " ===
-noremap te :Defx -split=vertical -winwidth=30 -direction=topleft -columns=git:mark:icons:indent:filename:type<CR>
+noremap <silent> te :Defx -split=vertical -winwidth=30 -direction=topleft<CR>
 call defx#custom#column('icon', {
             \ 'directory_icon': '▸',
             \ 'opened_icon': '▾',
@@ -627,9 +593,8 @@ call defx#custom#column('mark', {
             \ })
 
 autocmd FileType defx set cursorline
-autocmd FileType defx call s:defx_my_settings()
-function! s:defx_my_settings() abort
-    " Define mappings
+autocmd FileType defx call s:Defx_mappings()
+function! s:Defx_mappings() abort
     nnoremap <silent><buffer><expr> <CR> defx#do_action('open')
     nnoremap <silent><buffer><expr> c defx#do_action('copy')
     nnoremap <silent><buffer><expr> m defx#do_action('move')
@@ -661,33 +626,6 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
     nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
 endfunction
-
-" == defx-git ==
-call defx#custom#column('git', 'indicators', {
-            \ 'Modified'  : '✹',
-            \ 'Staged'    : '✚',
-            \ 'Untracked' : '✭',
-            \ 'Renamed'   : '➜',
-            \ 'Unmerged'  : '═',
-            \ 'Ignored'   : '☒',
-            \ 'Deleted'   : '✖',
-            \ 'Unknown'   : '?'
-            \ })
-
-" == defx-icons ==
-let g:defx_icons_enable_syntax_highlight = 1
-let g:defx_icons_column_length = 1
-let g:defx_icons_directory_icon = ''
-let g:defx_icons_mark_icon = '*'
-let g:defx_icons_copy_icon = ''
-let g:defx_icons_move_icon = ''
-let g:defx_icons_parent_icon = ''
-let g:defx_icons_default_icon = ''
-let g:defx_icons_directory_symlink_icon = ''
-" Options below are applicable only when using "tree" feature
-let g:defx_icons_root_opened_tree_icon = ''
-let g:defx_icons_nested_opened_tree_icon = ''
-let g:defx_icons_nested_closed_tree_icon = ''
 
 " ===
 " === goyo
@@ -750,6 +688,8 @@ nmap ga <Plug>(EasyAlign)
 " ===
 " === vim-floaterm
 " ===
+let g:floaterm_width = 0.7
+let g:floaterm_height = 0.7
 noremap tr :FloatermNew ranger<CR>
 
 " ===
