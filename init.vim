@@ -83,22 +83,31 @@ set smartcase
 set backup
 set swapfile
 set undofile
-set backupdir=$HOME/.config/nvim/.backup
-set directory=$HOME/.config/nvim/.backup
-set undodir=$HOME/.config/nvim/.backup
-if !isdirectory($HOME.'/.config/nvim/.backup') && exists('*mkdir')
-  call mkdir($HOME.'/.config/nvim/.backup')
+set backupdir=$HOME/.config/nvim/cache/backup
+set directory=$HOME/.config/nvim/cache/swap
+set undodir=$HOME/.config/nvim/cache/undo
+if !isdirectory($HOME.'/.config/nvim/cache') && exists('*mkdir')
+  call mkdir($HOME.'/.config/nvim/cache')
+endif
+if !isdirectory($HOME.'/.config/nvim/cache/backup') && exists('*mkdir')
+  call mkdir($HOME.'/.config/nvim/cache/backup')
+endif
+if !isdirectory($HOME.'/.config/nvim/cache/swap') && exists('*mkdir')
+  call mkdir($HOME.'/.config/nvim/cache/swap')
+endif
+if !isdirectory($HOME.'/.config/nvim/cache/undo') && exists('*mkdir')
+  call mkdir($HOME.'/.config/nvim/cache/undo')
 endif
 
 " =============================================
 "               Some Mappings
 " =============================================
 
-" 
+" Best basic.
 noremap s <Nop>
+noremap D <Nop>
 noremap <Leader>fs :w<CR>
 noremap <Leader>fq :q<CR>
-noremap <Leader>fr :source $MYVIMRC<CR>
 noremap ; :
 noremap : ;
 
@@ -123,7 +132,7 @@ inoremap <M-k> <up>
 inoremap <M-l> <right>
 
 noremap <C-h> 0
-noremap <C-l> $
+noremap <C-l> g_
 
 noremap <C-k> 3<C-y>
 noremap <C-j> 3<C-e>
@@ -205,7 +214,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 
-Plug 'majutsushi/tagbar'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'mbbill/undotree'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'kristijanhusak/defx-git'
@@ -267,13 +276,14 @@ set cc=80
 set cursorline
 set showcmd    " show the command
 set showmatch
-set showmode
+set noshowmode
 set laststatus=2    " always show the statusline
-set signcolumn=yes  " always show the sidebar
 set showtabline=2   " always show the tabline
+set signcolumn=yes  " always show the sidebar
 
 set list
 set listchars=tab:\|\ ,trail:▫
+" Some signs.
 " | ¦ ┆ ┊ ▫ ▫ ┊ ┆ ¦ |
 
 " ===
@@ -287,17 +297,17 @@ let g:deus_termcolors=256
 highlight! NonText ctermfg=gray guifg=grey10
 " Use 'seb' to toggle the background opacity.
 let g:StylesBOpacity = 0
-noremap seb :call StylesBackgroundOpacityToggle()<CR>
+noremap <Leader>tb :call StylesBackgroundOpacityToggle()<CR>
 function! StylesBackgroundOpacityToggle()
     if g:StylesBOpacity == 0
-        execute "hi Normal ctermfg=None ctermbg=None guifg=None guibg=None"
-        execute "hi! NonText ctermfg=gray guifg=grey10"
+        execute "highlight Normal ctermfg=None ctermbg=None guifg=None guibg=None"
+        execute "highlight! NonText ctermfg=gray guifg=grey10"
         set nocursorline
         set cc=0
         let g:StylesBOpacity = 1
     else
         execute "colorscheme deus"
-        execute "hi! NonText ctermfg=gray guifg=grey10"
+        execute "highlight! NonText ctermfg=gray guifg=grey10"
         set cursorline
         set cc=80
         let g:StylesBOpacity = 0
@@ -345,7 +355,7 @@ let g:rainbow_conf = {
     \   }
     \}
 " Use 'ser' to toggle the Rainbow.
-noremap ser :RainbowToggle<CR>
+noremap <Leader>tr :RainbowToggle<CR>
 
 " ===
 " === vim-startify
@@ -395,16 +405,16 @@ highlight StartifyVar     guifg=#8EC07C
 let g:indentLine_fileType = ['c', 'cpp', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
 let g:indentLine_color_gui = '#000000'
 " Use 'sei' to toggle the indentLine.
-noremap sei :IndentLinesToggle<CR>
+noremap <Leader>ti :IndentLinesToggle<CR>
 
 " ===
 " === vim-illuminate
 " ===
-hi illuminatedWord cterm=underline gui=underline
+highlight illuminatedWord cterm=underline gui=underline
 let g:Illuminate_ftblacklist = ['defx']
 let g:Illuminate_delay = 250
 " Use 'seu' to toggle the underline of the word.
-noremap seu :IlluminationToggle<CR>
+noremap <Leader>tu :IlluminationToggle<CR>
 
 " =============================================
 "           Configure about Plugins
@@ -473,7 +483,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <Leader>rn <Plug>(coc-rename)
@@ -556,18 +566,8 @@ vmap <Leader>e <Plug>(coc-translator-ev)
 nmap <Leader>p <Plug>(coc-translator-r)
 vmap <Leader>p <Plug>(coc-translator-rv)
 
-" == coc-explorer ==
-"-noremap te :CocCommand explorer<CR>
-" ✹ ✚ ✭ ➜ ═ ✖ ✗ ✔︎ ☒ ?
-
 " == coc-yank ==
-noremap ty  :<C-u>CocList -A --normal yank<cr>
-
-" == coc-vimlsp ==
-let g:markdown_fenced_languages = [
-            \ 'vim',
-            \ 'help'
-            \ ]
+noremap ty  :<C-u>CocList -A --normal yank<CR>
 
 " ===
 " === ctags
@@ -577,7 +577,7 @@ let g:markdown_fenced_languages = [
 " ===
 " === defx.nvim
 " ===
-noremap <silent> te :Defx -split=vertical -winwidth=30 -direction=topleft<CR>
+noremap <silent> <Leader>fe :Defx -split=vertical -winwidth=30 -direction=topleft<CR>
 call defx#custom#column('icon', {
             \ 'directory_icon': '▸',
             \ 'opened_icon': '▾',
@@ -630,7 +630,7 @@ endfunction
 " ===
 " === goyo
 " ===
-noremap tgy :Goyo<CR>
+noremap <Leader>tg :Goyo<CR>:highlight! NonText ctermfg=gray guifg=grey10<CR>
 let g:goyo_width  = 95
 let g:goyo_height = 95
 let g:goyo_linenr = 0
@@ -645,7 +645,7 @@ let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world  = 0
 let g:mkdp_open_ip            = ''
 " Special
-let g:mkdp_browser = 'google-chrome-stable'
+let g:mkdp_browser            = 'google-chrome-stable'
 " Special
 let g:mkdp_echo_preview_url   = 0
 let g:mkdp_browserfunc        = ''
@@ -690,7 +690,7 @@ nmap ga <Plug>(EasyAlign)
 " ===
 let g:floaterm_width = 0.7
 let g:floaterm_height = 0.7
-noremap tr :FloatermNew ranger<CR>
+noremap <Leader>fr :FloatermNew ranger<CR>
 
 " ===
 " === vim-markdown-toc

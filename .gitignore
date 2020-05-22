@@ -1,2 +1,4 @@
 plugged/
-.backup/
+cache/backup
+cache/swap
+cache/undo
