@@ -1,9 +1,9 @@
-"  __  __                 _   ___     _____ __  __ ____   ____ 
-" |  \/  |_   _          | \ | \ \   / /_ _|  \/  |  _ \ / ___|
-" | |\/| | | | |  _____  |  \| |\ \ / / | || |\/| | |_) | |    
-" | |  | | |_| | |_____| | |\  | \ V /  | || |  | |  _ <| |___ 
-" |_|  |_|\__, |         |_| \_|  \_/  |___|_|  |_|_| \_\\____|
-"         |___/                                                
+"  ____  _                 _    __     ___           
+" / ___|(_)_ __ ___  _ __ | | __\ \   / (_)_ __ ___  
+" \___ \| | '_ ` _ \| '_ \| |/ _ \ \ / /| | '_ ` _ \ 
+"  ___) | | | | | | | |_) | |  __/\ V / | | | | | | |
+" |____/|_|_| |_| |_| .__/|_|\___| \_/  |_|_| |_| |_|
+"                   |_|                              
 
 " =============================================
 "                  The Path
@@ -73,8 +73,8 @@ let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " Search
+execute "nohlsearch"
 set hlsearch
-exec "nohlsearch"
 set incsearch
 set ignorecase
 set smartcase
@@ -86,18 +86,6 @@ set undofile
 set backupdir=$HOME/.config/nvim/cache/backup
 set directory=$HOME/.config/nvim/cache/swap
 set undodir=$HOME/.config/nvim/cache/undo
-if !isdirectory($HOME.'/.config/nvim/cache') && exists('*mkdir')
-  call mkdir($HOME.'/.config/nvim/cache')
-endif
-if !isdirectory($HOME.'/.config/nvim/cache/backup') && exists('*mkdir')
-  call mkdir($HOME.'/.config/nvim/cache/backup')
-endif
-if !isdirectory($HOME.'/.config/nvim/cache/swap') && exists('*mkdir')
-  call mkdir($HOME.'/.config/nvim/cache/swap')
-endif
-if !isdirectory($HOME.'/.config/nvim/cache/undo') && exists('*mkdir')
-  call mkdir($HOME.'/.config/nvim/cache/undo')
-endif
 
 " =============================================
 "               Some Mappings
@@ -144,31 +132,31 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Window management.
-noremap sK :set nosplitbelow<CR>:split<CR>
-noremap sJ :set splitbelow<CR>:split<CR>
-noremap sH :set nosplitright<CR>:vsplit<CR>
-noremap sL :set splitright<CR>:vsplit<CR>
-noremap sk <C-w>k
-noremap sj <C-W>j
-noremap sh <C-W>h
-noremap sl <C-W>l
-noremap s<Up> :res +3<CR>
-noremap s<Down> :res -3<CR>
-noremap s<Left> :vertical resize-5<CR>
-noremap s<Right> :vertical resize+5<CR>
-noremap srv <C-w>t<C-w>H
-noremap srh <C-w>t<C-w>K
+noremap <Leader>wK :set nosplitbelow<CR>:split<CR>
+noremap <Leader>wJ :set splitbelow<CR>:split<CR>
+noremap <Leader>wH :set nosplitright<CR>:vsplit<CR>
+noremap <Leader>wL :set splitright<CR>:vsplit<CR>
+noremap <Leader>wk <C-w>k
+noremap <Leader>wj <C-W>j
+noremap <Leader>wh <C-W>h
+noremap <Leader>wl <C-W>l
+noremap <Leader>w<Up> :res +3<CR>
+noremap <Leader>w<Down> :res -3<CR>
+noremap <Leader>w<Left> :vertical resize-5<CR>
+noremap <Leader>w<Right> :vertical resize+5<CR>
+noremap <Leader>wrv <C-w>t<C-w>H
+noremap <Leader>wrh <C-w>t<C-w>K
 
 " Tabs.
-noremap sn :tabedit<CR>
-noremap su :-tabnext<CR>
-noremap si :+tabnext<CR>
-noremap smu :-tabmove<CR>
-noremap smi :+tabmove<CR>
+noremap <Leader>wn :tabedit<CR>
+noremap <Leader>wu :-tabnext<CR>
+noremap <Leader>wi :+tabnext<CR>
+noremap <Leader>wmu :-tabmove<CR>
+noremap <Leader>wmi :+tabmove<CR>
 
 " Buffers.
-noremap sU :bprevious<CR>
-noremap sI :bnext<CR>
+noremap <Leader>wU :bprevious<CR>
+noremap <Leader>wI :bnext<CR>
 
 " Search.
 noremap <Leader><CR> :nohlsearch<CR>
@@ -185,56 +173,34 @@ noremap <Leader>ts :set spell!<CR>
 noremap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 
 " =============================================
-"         Terminal Settings and Styles
-" =============================================
-let g:neoterm_autoscroll = 1
-autocmd TermOpen term://* startinsert
-let g:terminal_color_0  = '#000000'
-let g:terminal_color_1  = '#FF5555'
-let g:terminal_color_2  = '#50FA7B'
-let g:terminal_color_3  = '#F1FA8C'
-let g:terminal_color_4  = '#BD93F9'
-let g:terminal_color_5  = '#FF79C6'
-let g:terminal_color_6  = '#8BE9FD'
-let g:terminal_color_7  = '#BFBFBF'
-let g:terminal_color_8  = '#4D4D4D'
-let g:terminal_color_9  = '#FF6E67'
-let g:terminal_color_10 = '#5AF78E'
-let g:terminal_color_11 = '#F4F99D'
-let g:terminal_color_12 = '#CAA9FA'
-let g:terminal_color_13 = '#FF92D0'
-let g:terminal_color_14 = '#9AEDFE'
-
-" =============================================
 "               Install Plugins
 " =============================================
 call plug#begin('$HOME/.config/nvim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-surround'
+"-Plug 'tpope/vim-surround'
 
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'mbbill/undotree'
+"-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"-Plug 'mbbill/undotree'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'kristijanhusak/defx-git'
 " Plug 'kristijanhusak/defx-icons'
 
-Plug 'junegunn/fzf.vim'
+"-Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-easy-align'
-" Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 " Plug 'junegunn/vim-emoji'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'easymotion/vim-easymotion'
+"-Plug 'tpope/vim-fugitive'
+"-Plug 'easymotion/vim-easymotion'
 " Plug 'universal-ctags/ctags'
 
 " Coding
 Plug 'dense-analysis/ale'
-Plug 'honza/vim-snippets'
+"-Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Terminal
@@ -250,14 +216,14 @@ Plug 'mzlogin/vim-markdown-toc'
 Plug 'vim-scripts/fcitx.vim'
 
 " NeoVim Styles
-Plug 'ajmwagar/vim-deus'
+Plug 'joshdick/onedark.vim'
 Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
 Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'psliwka/vim-smoothie'
 
 call plug#end()
 
@@ -287,43 +253,33 @@ set listchars=tab:\|\ ,trail:▫
 " | ¦ ┆ ┊ ▫ ▫ ┊ ┆ ¦ |
 
 " ===
-" === vim-deus
+" === onedark.vim
 " ===
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set background=dark    " Setting dark mode
-colorscheme deus
-let g:deus_termcolors=256
-highlight! NonText ctermfg=gray guifg=grey10
+colorscheme onedark
 " Use 'seb' to toggle the background opacity.
+noremap <Leader>tsb :call StylesBackgroundOpacityToggle()<CR>
 let g:StylesBOpacity = 0
-noremap <Leader>tb :call StylesBackgroundOpacityToggle()<CR>
 function! StylesBackgroundOpacityToggle()
     if g:StylesBOpacity == 0
         execute "highlight Normal ctermfg=None ctermbg=None guifg=None guibg=None"
-        execute "highlight! NonText ctermfg=gray guifg=grey10"
         set nocursorline
         set cc=0
         let g:StylesBOpacity = 1
     else
-        execute "colorscheme deus"
-        execute "highlight! NonText ctermfg=gray guifg=grey10"
+        execute "colorscheme onedark"
         set cursorline
         set cc=80
         let g:StylesBOpacity = 0
     endif
 endfunction
-" If you use vim in a terminal that supports italics
-" set the environment variable TERM_ITALICS to TRUE
-" (i.e. export TERM_ITALICS=true) to enable with vim-deus.
 
 " ===
 " === vim-airline
 " ===
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-" let g:airline_powerline_fonts = 1
-let g:airline_theme='deus'
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'onedark'
 " " Nice Airline Themes
 " " dracula base16_snazzy base16_bright  base16_chalk base16_default
 " " base16_grayscale base16_ocean base16_summerfruit gruvbox deus
@@ -355,22 +311,21 @@ let g:rainbow_conf = {
     \   }
     \}
 " Use 'ser' to toggle the Rainbow.
-noremap <Leader>tr :RainbowToggle<CR>
+noremap <Leader>tsr :RainbowToggle<CR>
 
 " ===
 " === vim-startify
 " ===
-" autocmd TabNewEntered * Startify
-let g:startify_padding_left = 20
+let g:startify_padding_left = 25
 let s:startify_header = [
-            \ ' _                _    __     ___           ',
-            \ '| |    ___   __ _(_) __\ \   / (_)_ __ ___  ',
-            \ '| |   / _ \ / _` | |/ __\ \ / /| | ''_ ` _ \ ',
-            \ '| |__| (_) | (_| | | (__ \ V / | | | | | | |',
-            \ '|_____\___/ \__, |_|\___| \_/  |_|_| |_| |_|',
-            \ '            |___/                           ',
-            \ '                                            ',
-            \ '        [ Author:GitHub@logicskky ]         ',
+            \ ' ____  _                 _    __     ___           ',
+            \ '/ ___|(_)_ __ ___  _ __ | | __\ \   / (_)_ __ ___  ',
+            \ '\___ \| | ''_ ` _ \| ''_ \| |/ _ \ \ / /| | ''_ ` _ \ ',
+            \ ' ___) | | | | | | | |_) | |  __/\ V / | | | | | | |',
+            \ '|____/|_|_| |_| |_| .__/|_|\___| \_/  |_|_| |_| |_|',
+            \ '                  |_|                              ',
+            \ '                                                   ',
+            \ '            [ Author:GitHub@logicskky ]            ',
             \ ]
 let s:startify_footer = [
             \ '----------------------------------------------------------------------------------',
@@ -387,25 +342,39 @@ endfunction
 let g:startify_custom_header = s:Startify_center(s:startify_header)
 let g:startify_custom_footer = s:Startify_center(s:startify_footer)
 
-highlight StartifyBracket guifg=#83A598
-highlight StartifyFile    guifg=#FB4934
-highlight StartifyFooter  guifg=#FE8019
-highlight StartifyHeader  guifg=#FE8019
-highlight StartifyNumber  guifg=#fabd2f
-highlight StartifyPath    guifg=#83A598
-highlight StartifySection guifg=#FE8019
-highlight StartifySelect  guifg=#FE8019
-highlight StartifySlash   guifg=#83A598
-highlight StartifySpecial guifg=#2C323B
-highlight StartifyVar     guifg=#8EC07C
+" For onedark.vim.
+highlight StartifyBracket guifg=#ABB2BF
+highlight StartifyFile    guifg=#E06C75
+highlight StartifyFooter  guifg=#E5C07B
+highlight StartifyHeader  guifg=#E5C07B
+highlight StartifyNumber  guifg=#E5C07B
+highlight StartifyPath    guifg=#61AFEF
+highlight StartifySection guifg=#C678DD
+highlight StartifySelect  guifg=#C678DD
+highlight StartifySlash   guifg=#61AFEF
+highlight StartifySpecial guifg=#5C6370
+highlight StartifyVar     guifg=#98C379
+
+" For vim-deus.
+"-highlight StartifyBracket guifg=#83A598
+"-highlight StartifyFile    guifg=#FB4934
+"-highlight StartifyFooter  guifg=#FE8019
+"-highlight StartifyHeader  guifg=#FE8019
+"-highlight StartifyNumber  guifg=#fabd2f
+"-highlight StartifyPath    guifg=#83A598
+"-highlight StartifySection guifg=#FE8019
+"-highlight StartifySelect  guifg=#FE8019
+"-highlight StartifySlash   guifg=#83A598
+"-highlight StartifySpecial guifg=#2C323B
+"-highlight StartifyVar     guifg=#8EC07C
 
 " ===
 " === indentLine
 " ===
-let g:indentLine_fileType = ['c', 'cpp', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
+let g:indentLine_fileType = ['c', 'cpp', 'lua', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
 let g:indentLine_color_gui = '#000000'
 " Use 'sei' to toggle the indentLine.
-noremap <Leader>ti :IndentLinesToggle<CR>
+noremap <Leader>tsi :IndentLinesToggle<CR>
 
 " ===
 " === vim-illuminate
@@ -414,7 +383,29 @@ highlight illuminatedWord cterm=underline gui=underline
 let g:Illuminate_ftblacklist = ['defx']
 let g:Illuminate_delay = 250
 " Use 'seu' to toggle the underline of the word.
-noremap <Leader>tu :IlluminationToggle<CR>
+noremap <Leader>tsu :IlluminationToggle<CR>
+
+" =============================================
+"         Terminal Settings and Styles
+" =============================================
+let g:neoterm_autoscroll = 1
+autocmd TermOpen term://* startinsert
+" dracula colorscheme for terminal
+"-let g:terminal_color_0  = '#000000'
+"-let g:terminal_color_1  = '#FF5555'
+"-let g:terminal_color_2  = '#50FA7B'
+"-let g:terminal_color_3  = '#F1FA8C'
+"-let g:terminal_color_4  = '#BD93F9'
+"-let g:terminal_color_5  = '#FF79C6'
+"-let g:terminal_color_6  = '#8BE9FD'
+"-let g:terminal_color_7  = '#BFBFBF'
+"-let g:terminal_color_8  = '#4D4D4D'
+"-let g:terminal_color_9  = '#FF6E67'
+"-let g:terminal_color_10 = '#5AF78E'
+"-let g:terminal_color_11 = '#F4F99D'
+"-let g:terminal_color_12 = '#CAA9FA'
+"-let g:terminal_color_13 = '#FF92D0'
+"-let g:terminal_color_14 = '#9AEDFE'
 
 " =============================================
 "           Configure about Plugins
@@ -472,7 +463,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use D to show documentation in preview window.
+" Use 'D' to show documentation in preview window.
 nnoremap <silent> D :call <SID>show_documentation()<CR>
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
@@ -489,8 +480,8 @@ endfunction
 nmap <Leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-vmap <Leader>f  <Plug>(coc-format-selected)
-nmap <Leader>f  <Plug>(coc-format-selected)
+"-vmap <Leader>f  <Plug>(coc-format-selected)
+"-nmap <Leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
     autocmd!
@@ -502,26 +493,26 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-vmap <Leader>a  <Plug>(coc-codeaction-selected)
-nmap <Leader>a  <Plug>(coc-codeaction-selected)
+"-vmap <Leader>a  <Plug>(coc-codeaction-selected)
+"-nmap <Leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
-nmap <Leader>ac  <Plug>(coc-codeaction)
+"-nmap <Leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <Leader>qf  <Plug>(coc-fix-current)
+"-nmap <Leader>qf  <Plug>(coc-fix-current)
 
 " Introduce function text object
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-vmap if <Plug>(coc-funcobj-i)
-vmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+"-vmap if <Plug>(coc-funcobj-i)
+"-vmap af <Plug>(coc-funcobj-a)
+"-omap if <Plug>(coc-funcobj-i)
+"-omap af <Plug>(coc-funcobj-a)
 
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-vmap <silent> <TAB> <Plug>(coc-range-select)
+"-nmap <silent> <TAB> <Plug>(coc-range-select)
+"-vmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -567,7 +558,7 @@ nmap <Leader>p <Plug>(coc-translator-r)
 vmap <Leader>p <Plug>(coc-translator-rv)
 
 " == coc-yank ==
-noremap ty  :<C-u>CocList -A --normal yank<CR>
+noremap <Leader>ty  :<C-u>CocList -A --normal yank<CR>
 
 " ===
 " === ctags
@@ -577,7 +568,7 @@ noremap ty  :<C-u>CocList -A --normal yank<CR>
 " ===
 " === defx.nvim
 " ===
-noremap <silent> <Leader>fe :Defx -split=vertical -winwidth=30 -direction=topleft<CR>
+noremap <silent> <Leader>td :Defx -split=vertical -winwidth=30 -direction=topleft<CR>
 call defx#custom#column('icon', {
             \ 'directory_icon': '▸',
             \ 'opened_icon': '▾',
@@ -630,7 +621,7 @@ endfunction
 " ===
 " === goyo
 " ===
-noremap <Leader>tg :Goyo<CR>:highlight! NonText ctermfg=gray guifg=grey10<CR>
+noremap <silent><Leader>tg :Goyo<CR>:highlight! NonText ctermfg=gray guifg=grey10<CR>
 let g:goyo_width  = 95
 let g:goyo_height = 95
 let g:goyo_linenr = 0
@@ -645,7 +636,7 @@ let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world  = 0
 let g:mkdp_open_ip            = ''
 " Special
-let g:mkdp_browser            = 'google-chrome-stable'
+let g:mkdp_browser            = 'firefox'
 " Special
 let g:mkdp_echo_preview_url   = 0
 let g:mkdp_browserfunc        = ''
@@ -688,9 +679,25 @@ nmap ga <Plug>(EasyAlign)
 " ===
 " === vim-floaterm
 " ===
-let g:floaterm_width = 0.7
-let g:floaterm_height = 0.7
-noremap <Leader>fr :FloatermNew ranger<CR>
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+noremap <Leader>tr :FloatermNew ranger<CR>
+noremap <Leader>tl :FloatermNew lazygit<CR>
+
+" ===
+" === vim-gitgutter
+" ===
+" let g:gitgutter_sign_added = '│'
+" let g:gitgutter_sign_modified = '│'
+" let g:gitgutter_sign_removed = '│'
+" let g:gitgutter_sign_removed_first_line = '│'
+" let g:gitgutter_sign_modified_removed = '│'
+
+let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_modified = '░'
+let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_modified_removed = '▒'
 
 " ===
 " === vim-markdown-toc
@@ -705,7 +712,7 @@ noremap tm :TableModeToggle<CR>
 " =============================================
 "              Auto Run Programs
 " =============================================
-noremap r :call CompileRunGcc()<CR>
+noremap <Leader>fr :call CompileRunGcc()<CR>
 function! CompileRunGcc()
     execute "w"
     if &filetype == 'c'
