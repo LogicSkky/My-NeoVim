@@ -8,6 +8,7 @@ autocmd FileType markdown inoremap <buffer> ,c ```<CR><++><CR>```<CR><CR><++><Es
 autocmd FileType markdown inoremap <buffer> ,p ![](<++>) <++><Esc>F[a
 autocmd FileType markdown inoremap <buffer> ,w [](<++>) <++><Esc>F[a
 autocmd FileType markdown inoremap <buffer> ,l ---<CR><CR>
+autocmd FileType markdown inoremap <buffer> ,k <kbd></kbd> <++><Esc>2F>a
 autocmd FileType markdown inoremap <buffer> ,1 # 
 autocmd FileType markdown inoremap <buffer> ,2 ## 
 autocmd FileType markdown inoremap <buffer> ,3 ### 

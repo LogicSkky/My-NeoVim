@@ -203,6 +203,9 @@ Plug 'dense-analysis/ale'
 "-Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" TOML
+Plug 'cespare/vim-toml'
+
 " Terminal
 Plug 'voldikss/vim-floaterm'
 " Plug 'wincent/terminus'
@@ -212,8 +215,8 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'mzlogin/vim-markdown-toc'
 
-" Auto change the input method
-Plug 'vim-scripts/fcitx.vim'
+" Auto change the input method.
+"Plug 'vim-scripts/fcitx.vim'
 
 " NeoVim Styles
 Plug 'joshdick/onedark.vim'
@@ -318,14 +321,19 @@ noremap <Leader>tsr :RainbowToggle<CR>
 " ===
 let g:startify_padding_left = 25
 let s:startify_header = [
-            \ ' ____  _                 _    __     ___           ',
-            \ '/ ___|(_)_ __ ___  _ __ | | __\ \   / (_)_ __ ___  ',
-            \ '\___ \| | ''_ ` _ \| ''_ \| |/ _ \ \ / /| | ''_ ` _ \ ',
-            \ ' ___) | | | | | | | |_) | |  __/\ V / | | | | | | |',
-            \ '|____/|_|_| |_| |_| .__/|_|\___| \_/  |_|_| |_| |_|',
-            \ '                  |_|                              ',
-            \ '                                                   ',
-            \ '            [ Author:GitHub@logicskky ]            ',
+            \ ' /##                           /##           /##    /## /##              ',
+            \ '| ##                          |__/          | ##   | ##|__/              ',
+            \ '| ##        /######   /######  /##  /#######| ##   | ## /## /######/#### ',
+            \ '| ##       /##__  ## /##__  ##| ## /##_____/|  ## / ##/| ##| ##_  ##_  ##',
+            \ '| ##      | ##  \ ##| ##  \ ##| ##| ##       \  ## ##/ | ##| ## \ ## \ ##',
+            \ '| ##      | ##  | ##| ##  | ##| ##| ##        \  ###/  | ##| ## | ## | ##',
+            \ '| ########|  ######/|  #######| ##|  #######   \  #/   | ##| ## | ## | ##',
+            \ '|________/ \______/  \____  ##|__/ \_______/    \_/    |__/|__/ |__/ |__/',
+            \ '                     /##  \ ##                                           ',
+            \ '                    |  ######/                                           ',
+            \ '                     \______/                                            ',
+            \ '                                                                         ',
+            \ '                       [ Author: GitHub@logicskky ]                      ',
             \ ]
 let s:startify_footer = [
             \ '----------------------------------------------------------------------------------',
@@ -710,10 +718,10 @@ noremap to :GenTocGFM<CR>
 noremap tm :TableModeToggle<CR>
 
 " =============================================
-"              Auto Run Programs
+"                Auto Run Files
 " =============================================
-noremap <Leader>fr :call CompileRunGcc()<CR>
-function! CompileRunGcc()
+noremap <Leader>fr :call RunFile()<CR>
+function! RunFile()
     execute "w"
     if &filetype == 'c'
         set splitbelow
