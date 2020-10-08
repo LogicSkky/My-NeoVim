@@ -107,22 +107,14 @@ noremap U <C-r>
 "     j
 "     v
 " Move the cursor.
-noremap H 8h
-noremap J 5j
-noremap K 5k
-noremap L 8l
-noremap W 3w
-noremap B 3b
+noremap H 0
+noremap L g_
 
 inoremap <M-h> <left>
 inoremap <M-j> <down>
 inoremap <M-k> <up>
 inoremap <M-l> <right>
 
-noremap <C-h> 0
-noremap <C-l> g_
-
-noremap <C-k> 3<C-y>
 noremap <C-j> 3<C-e>
 
 " Indent.
