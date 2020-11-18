@@ -85,14 +85,8 @@ set undodir=$HOME/.config/nvim/cache/undo
 " =============================================
 
 " Best basic.
-noremap s <Nop>
-noremap D <Nop>
 noremap <Leader>fs :w<CR>
 noremap <Leader>fq :q<CR>
-noremap ; :
-noremap : ;
-
-noremap U <C-r>
 
 "     ^
 "     k
@@ -100,15 +94,6 @@ noremap U <C-r>
 "     j
 "     v
 " Move the cursor.
-noremap H 0
-noremap L g_
-
-inoremap <M-h> <left>
-inoremap <M-j> <down>
-inoremap <M-k> <up>
-inoremap <M-l> <right>
-
-noremap <C-j> 3<C-e>
 
 " Indent.
 noremap < <<
@@ -306,17 +291,24 @@ noremap <Leader>tsr :RainbowToggle<CR>
 " ===
 let g:startify_padding_left = 25
 let s:startify_header = [
-            \ ' /##    /## /##              ',
-            \ '| ##   | ##|__/              ',
-            \ '| ##   | ## /## /######/#### ',
-            \ '|  ## / ##/| ##| ##_  ##_  ##',
-            \ ' \  ## ##/ | ##| ## \ ## \ ##',
-            \ '  \  ###/  | ##| ## | ## | ##',
-            \ '   \  #/   | ##| ## | ## | ##',
-            \ '    \_/    |__/|__/ |__/ |__/',
-            \ '                             ',
-            \ '[ Author: GitHub@logicskky ] ',
+            \ '_   _         __     ___            ',
+            \ '| \ | | ___  __\ \   / (_)_ __ ___  ',
+            \ '|  \| |/ _ \/ _ \ \ / /| | ''_ ` _ \',
+            \ '| |\  |  __/ (_) \ V / | | | | | | |',
+            \ '|_| \_|\___|\___/ \_/  |_|_| |_| |_|',
             \ ]
+"let s:startify_header = [
+            "\ ' /##    /## /##              ',
+            "\ '| ##   | ##|__/              ',
+            "\ '| ##   | ## /## /######/#### ',
+            "\ '|  ## / ##/| ##| ##_  ##_  ##',
+            "\ ' \  ## ##/ | ##| ## \ ## \ ##',
+            "\ '  \  ###/  | ##| ## | ## | ##',
+            "\ '   \  #/   | ##| ## | ## | ##',
+            "\ '    \_/    |__/|__/ |__/ |__/',
+            "\ '                             ',
+            "\ '[ Author: GitHub@logicskky ] ',
+            "\ ]
 let s:startify_footer = [
             \ '----------------------------------------------------------------------------------',
             \ '                                   Enjoy Coding!                                  ',
