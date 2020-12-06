@@ -134,7 +134,7 @@ noremap n nzz
 noremap N Nzz
 
 " Copy selected text to system clipboard.
-vnoremap Y "+y
+" vnoremap Y "+y
 
 " Spell Check.
 noremap <Leader>ts :set spell!<CR>
@@ -222,36 +222,20 @@ set signcolumn=yes  " always show the sidebar
 
 set list
 set listchars=tab:\|\ ,trail:▫
-" Some signs.
+" Some charactors.
 " | ¦ ┆ ┊ ▫ ▫ ┊ ┆ ¦ |
 
 " ===
 " === onedark.vim
 " ===
 colorscheme onedark
-" Use 'seb' to toggle the background opacity.
-noremap <Leader>tsb :call StylesBackgroundOpacityToggle()<CR>
-let g:StylesBOpacity = 0
-function! StylesBackgroundOpacityToggle()
-    if g:StylesBOpacity == 0
-        execute "highlight Normal ctermfg=None ctermbg=None guifg=None guibg=None"
-        set nocursorline
-        set cc=0
-        let g:StylesBOpacity = 1
-    else
-        execute "colorscheme onedark"
-        set cursorline
-        set cc=80
-        let g:StylesBOpacity = 0
-    endif
-endfunction
 
 " ===
 " === vim-airline
 " ===
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_theme = 'onedark'
 " " Nice Airline Themes
 " " dracula base16_snazzy base16_bright  base16_chalk base16_default
@@ -283,7 +267,7 @@ let g:rainbow_conf = {
     \       'css': 0,
     \   }
     \}
-" Use 'ser' to toggle the Rainbow.
+" Use '<Leader>tsr' to toggle the Rainbow.
 noremap <Leader>tsr :RainbowToggle<CR>
 
 " ===
@@ -355,7 +339,7 @@ highlight StartifyVar     guifg=#98C379
 " ===
 let g:indentLine_fileType = ['c', 'cpp', 'lua', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
 let g:indentLine_color_gui = '#000000'
-" Use 'sei' to toggle the indentLine.
+" Use '<Leader>tsi' to toggle the indentLine.
 noremap <Leader>tsi :IndentLinesToggle<CR>
 
 " ===
@@ -364,7 +348,7 @@ noremap <Leader>tsi :IndentLinesToggle<CR>
 highlight illuminatedWord cterm=underline gui=underline
 let g:Illuminate_ftblacklist = ['defx']
 let g:Illuminate_delay = 250
-" Use 'seu' to toggle the underline of the word.
+" Use '<Leader>tsu' to toggle the underline of the word.
 noremap <Leader>tsu :IlluminationToggle<CR>
 
 " =============================================
@@ -373,21 +357,21 @@ noremap <Leader>tsu :IlluminationToggle<CR>
 let g:neoterm_autoscroll = 1
 autocmd TermOpen term://* startinsert
 " dracula colorscheme for terminal
-"-let g:terminal_color_0  = '#000000'
-"-let g:terminal_color_1  = '#FF5555'
-"-let g:terminal_color_2  = '#50FA7B'
-"-let g:terminal_color_3  = '#F1FA8C'
-"-let g:terminal_color_4  = '#BD93F9'
-"-let g:terminal_color_5  = '#FF79C6'
-"-let g:terminal_color_6  = '#8BE9FD'
-"-let g:terminal_color_7  = '#BFBFBF'
-"-let g:terminal_color_8  = '#4D4D4D'
-"-let g:terminal_color_9  = '#FF6E67'
-"-let g:terminal_color_10 = '#5AF78E'
-"-let g:terminal_color_11 = '#F4F99D'
-"-let g:terminal_color_12 = '#CAA9FA'
-"-let g:terminal_color_13 = '#FF92D0'
-"-let g:terminal_color_14 = '#9AEDFE'
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
 
 " =============================================
 "           Configure about Plugins
@@ -545,7 +529,8 @@ noremap <Leader>ty  :<C-u>CocList -A --normal yank<CR>
 " ===
 " === ctags
 " ===
-" set tags=./.tags;,.tags
+" I don't use ctags now. Maybu I'll use it in the future.
+"-set tags=./.tags;,.tags
 
 " ===
 " === defx.nvim
@@ -604,7 +589,7 @@ endfunction
 " === goyo
 " ===
 noremap <silent><Leader>tg :Goyo<CR>:highlight! NonText ctermfg=gray guifg=grey10<CR>
-let g:goyo_width  = 95
+let g:goyo_width  = 100
 let g:goyo_height = 95
 let g:goyo_linenr = 0
 
@@ -669,17 +654,17 @@ noremap <Leader>tl :FloatermNew lazygit<CR>
 " ===
 " === vim-gitgutter
 " ===
-" let g:gitgutter_sign_added = '│'
-" let g:gitgutter_sign_modified = '│'
-" let g:gitgutter_sign_removed = '│'
-" let g:gitgutter_sign_removed_first_line = '│'
-" let g:gitgutter_sign_modified_removed = '│'
+"-let g:gitgutter_sign_added = '│'
+"-let g:gitgutter_sign_modified = '│'
+"-let g:gitgutter_sign_removed = '│'
+"-let g:gitgutter_sign_removed_first_line = '│'
+"-let g:gitgutter_sign_modified_removed = '│'
 
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '░'
-let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_modified_removed = '▒'
+"-let g:gitgutter_sign_added = '▎'
+"-let g:gitgutter_sign_modified = '░'
+"-let g:gitgutter_sign_removed = '▏'
+"-let g:gitgutter_sign_removed_first_line = '▔'
+"-let g:gitgutter_sign_modified_removed = '▒'
 
 " ===
 " === vim-markdown-toc
