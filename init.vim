@@ -6,7 +6,7 @@
 " Special
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
-let g:ruby_host_prog    = '/home/frank/.gem/ruby/2.7.0/bin/neovim-ruby-host'
+"let g:ruby_host_prog    = '/home/frank/.gem/ruby/2.7.0/bin/neovim-ruby-host'
 " Special
 
 " =============================================
@@ -26,6 +26,7 @@ set wildmenu
 set scrolloff=3
 set mouse=a
 set encoding=UTF-8
+set fileencoding=UTF-8
 set history=500
 let &t_ut=''
 set autochdir
@@ -102,6 +103,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Window management.
+noremap <Leader>wq :q<CR>
 noremap <Leader>wK :set nosplitbelow<CR>:split<CR>
 noremap <Leader>wJ :set splitbelow<CR>:split<CR>
 noremap <Leader>wH :set nosplitright<CR>:vsplit<CR>
@@ -136,10 +138,10 @@ noremap N Nzz
 " Copy selected text to system clipboard.
 " vnoremap Y "+y
 
-" Spell Check.
+" Spell check.
 noremap <Leader>ts :set spell!<CR>
 
-" Find a Next '<++>' and Edit it.
+" Find a next '<++>' and edit it.
 noremap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 
 " =============================================
@@ -147,8 +149,9 @@ noremap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 " =============================================
 call plug#begin('$HOME/.config/nvim/plugged')
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
+"-Plug 'jiangmiao/auto-pairs'
+"-Plug 'terryma/vim-multiple-cursors'
 "-Plug 'tpope/vim-surround'
 
 "-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -174,7 +177,7 @@ Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " TOML
-Plug 'cespare/vim-toml'
+"-Plug 'cespare/vim-toml'
 
 " Terminal
 Plug 'voldikss/vim-floaterm'
@@ -189,13 +192,16 @@ Plug 'mzlogin/vim-markdown-toc'
 "Plug 'vim-scripts/fcitx.vim'
 
 " NeoVim Styles
-Plug 'joshdick/onedark.vim'
+"-Plug 'joshdick/onedark.vim'
+Plug 'atahabaki/archman-vim'
+"-Plug 'ParamagicDev/vim-medic_chalk'
 Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
-Plug 'ryanoasis/vim-devicons'
+"Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'psliwka/vim-smoothie'
 
 call plug#end()
@@ -211,7 +217,7 @@ syntax on
 set number
 set relativenumber
 set cmdheight=3
-set cc=80
+set colorcolumn=81
 set cursorline
 set showcmd    " show the command
 set showmatch
@@ -228,7 +234,16 @@ set listchars=tab:\|\ ,trail:▫
 " ===
 " === onedark.vim
 " ===
-colorscheme onedark
+"-colorscheme onedark
+" custom settings (for black background)
+"-highlight Normal guibg=#000000
+"-highlight CursorLine guibg=#181717
+"-highlight ColorColumn guibg=#181717
+
+" ===
+" === archman-vim
+" ===
+colorscheme archman
 
 " ===
 " === vim-airline
@@ -236,7 +251,7 @@ colorscheme onedark
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 0
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'base16_snazzy'
 " " Nice Airline Themes
 " " dracula base16_snazzy base16_bright  base16_chalk base16_default
 " " base16_grayscale base16_ocean base16_summerfruit gruvbox deus
@@ -338,7 +353,7 @@ highlight StartifyVar     guifg=#98C379
 " === indentLine
 " ===
 let g:indentLine_fileType = ['c', 'cpp', 'lua', 'py', 'vim', 'sh', 'json', 'yaml', 'yml']
-let g:indentLine_color_gui = '#000000'
+let g:indentLine_color_gui = '#494444'
 " Use '<Leader>tsi' to toggle the indentLine.
 noremap <Leader>tsi :IndentLinesToggle<CR>
 
@@ -684,7 +699,7 @@ function! RunFile()
     execute "w"
     if &filetype == 'c'
         set splitbelow
-        execute "!g++ % -o %<"
+        execute "!gcc % -o %<"
         :split
         :res -5
         :terminal ./%<
