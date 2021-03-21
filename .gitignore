@@ -1,5 +1,5 @@
 .netrwhist
 plugged/
-cache/backup
-cache/swap
-cache/undo
+cache/backup/
+cache/swap/
+cache/undo/
